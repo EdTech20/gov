@@ -1,0 +1,208 @@
+<div
+  class="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6"
+>
+  <div
+    class="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <div>
+      <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+        Recent Complaints
+      </h3>
+      <p class="mt-0.5 text-theme-xs text-gray-500 dark:text-gray-400">
+        Latest citizen complaints requiring attention
+      </p>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button
+        class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200"
+      >
+        <svg
+          width="20" height="20" viewBox="0 0 20 20" fill="none"
+          stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+        >
+          <path d="M3 6h14M6 10h8M9 14h2"/>
+        </svg>
+        Filter
+      </button>
+
+      <button
+        class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200"
+      >
+        See all
+      </button>
+    </div>
+  </div>
+
+  <div class="w-full overflow-x-auto">
+    <table class="min-w-full">
+      <!-- table header -->
+      <thead>
+        <tr class="border-gray-100 border-y dark:border-gray-800">
+          <th class="py-3 text-left">
+            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
+              Citizen / Ref #
+            </p>
+          </th>
+          <th class="py-3 text-left">
+            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
+              Category
+            </p>
+          </th>
+          <th class="py-3 text-left">
+            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
+              Date Filed
+            </p>
+          </th>
+          <th class="py-3 text-left">
+            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
+              Status
+            </p>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+        <!-- row 1 -->
+        <tr>
+          <td class="py-3">
+            <div class="flex items-center gap-3">
+              <div class="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold text-sm flex-shrink-0">
+                AJ
+              </div>
+              <div>
+                <p class="font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                  Amara Johnson
+                </p>
+                <span class="text-gray-500 text-theme-xs dark:text-gray-400">#CMP-2024-0041</span>
+              </div>
+            </div>
+          </td>
+          <td class="py-3">
+            <p class="text-gray-500 text-theme-sm dark:text-gray-400">Road Maintenance</p>
+          </td>
+          <td class="py-3">
+            <p class="text-gray-500 text-theme-sm dark:text-gray-400">May 5, 2024</p>
+          </td>
+          <td class="py-3">
+            <span class="rounded-full bg-warning-50 px-2 py-0.5 text-theme-xs font-medium text-warning-600 dark:bg-warning-500/15 dark:text-orange-400">
+              In Progress
+            </span>
+          </td>
+        </tr>
+
+        <!-- row 2 -->
+        <tr>
+          <td class="py-3">
+            <div class="flex items-center gap-3">
+              <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-100 dark:bg-green-500/10 text-green-600 dark:text-green-400 font-semibold text-sm flex-shrink-0">
+                OM
+              </div>
+              <div>
+                <p class="font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                  Obinna Madu
+                </p>
+                <span class="text-gray-500 text-theme-xs dark:text-gray-400">#CMP-2024-0039</span>
+              </div>
+            </div>
+          </td>
+          <td class="py-3">
+            <p class="text-gray-500 text-theme-sm dark:text-gray-400">Sanitation</p>
+          </td>
+          <td class="py-3">
+            <p class="text-gray-500 text-theme-sm dark:text-gray-400">May 3, 2024</p>
+          </td>
+          <td class="py-3">
+            <span class="rounded-full bg-success-50 px-2 py-0.5 text-theme-xs font-medium text-success-600 dark:bg-success-500/15 dark:text-success-500">
+              Resolved
+            </span>
+          </td>
+        </tr>
+
+        <!-- row 3 -->
+        <tr>
+          <td class="py-3">
+            <div class="flex items-center gap-3">
+              <div class="flex h-9 w-9 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 font-semibold text-sm flex-shrink-0">
+                FA
+              </div>
+              <div>
+                <p class="font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                  Fatima Al-Hassan
+                </p>
+                <span class="text-gray-500 text-theme-xs dark:text-gray-400">#CMP-2024-0038</span>
+              </div>
+            </div>
+          </td>
+          <td class="py-3">
+            <p class="text-gray-500 text-theme-sm dark:text-gray-400">Water Supply</p>
+          </td>
+          <td class="py-3">
+            <p class="text-gray-500 text-theme-sm dark:text-gray-400">May 2, 2024</p>
+          </td>
+          <td class="py-3">
+            <span class="rounded-full bg-error-50 px-2 py-0.5 text-theme-xs font-medium text-error-600 dark:bg-error-500/15 dark:text-error-500">
+              Escalated
+            </span>
+          </td>
+        </tr>
+
+        <!-- row 4 -->
+        <tr>
+          <td class="py-3">
+            <div class="flex items-center gap-3">
+              <div class="flex h-9 w-9 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 font-semibold text-sm flex-shrink-0">
+                KO
+              </div>
+              <div>
+                <p class="font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                  Kofi Owusu
+                </p>
+                <span class="text-gray-500 text-theme-xs dark:text-gray-400">#CMP-2024-0036</span>
+              </div>
+            </div>
+          </td>
+          <td class="py-3">
+            <p class="text-gray-500 text-theme-sm dark:text-gray-400">Street Lighting</p>
+          </td>
+          <td class="py-3">
+            <p class="text-gray-500 text-theme-sm dark:text-gray-400">Apr 30, 2024</p>
+          </td>
+          <td class="py-3">
+            <span class="rounded-full bg-warning-50 px-2 py-0.5 text-theme-xs font-medium text-warning-600 dark:bg-warning-500/15 dark:text-orange-400">
+              In Progress
+            </span>
+          </td>
+        </tr>
+
+        <!-- row 5 -->
+        <tr>
+          <td class="py-3">
+            <div class="flex items-center gap-3">
+              <div class="flex h-9 w-9 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-500/10 text-teal-600 dark:text-teal-400 font-semibold text-sm flex-shrink-0">
+                NE
+              </div>
+              <div>
+                <p class="font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                  Ngozi Eze
+                </p>
+                <span class="text-gray-500 text-theme-xs dark:text-gray-400">#CMP-2024-0034</span>
+              </div>
+            </div>
+          </td>
+          <td class="py-3">
+            <p class="text-gray-500 text-theme-sm dark:text-gray-400">Public Health</p>
+          </td>
+          <td class="py-3">
+            <p class="text-gray-500 text-theme-sm dark:text-gray-400">Apr 28, 2024</p>
+          </td>
+          <td class="py-3">
+            <span class="rounded-full bg-success-50 px-2 py-0.5 text-theme-xs font-medium text-success-600 dark:bg-success-500/15 dark:text-success-500">
+              Resolved
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

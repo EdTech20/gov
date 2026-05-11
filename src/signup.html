@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Sign Up | GovAdmin IMS</title>
+    <style>
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+      .rotate-y-5 {
+        transform: rotateY(-5deg);
+      }
+      .animate-bounce-slow {
+        animation: bounce-slow 4s infinite ease-in-out;
+      }
+      @keyframes bounce-slow {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+      body { visibility: hidden; }
+    </style>
+  </head>
+  <body
+    x-data="{ 'darkMode': localStorage.getItem('darkMode') ? JSON.parse(localStorage.getItem('darkMode')) : true }"
+    x-init="$watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark bg-gray-950': darkMode === true, 'bg-white': !darkMode}"
+    class="font-outfit"
+  >
+    <div class="flex min-h-screen overflow-hidden">
+      <!-- Left Section: Form -->
+      <div class="flex flex-col justify-center w-full px-6 py-12 lg:w-1/2 xl:px-24 dark:bg-gray-950">
+        <div class="w-full max-w-[440px] mx-auto">
+          <!-- Logo/Header -->
+          <div class="flex items-center gap-3 mb-8">
+            <div class="flex items-center justify-center w-12 h-12 bg-blue-600 rounded-2xl shadow-lg shadow-blue-500/20">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 11V17H17" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="text-3xl font-bold tracking-tight">
+              <span class="text-gray-900 dark:text-white">Gov</span><span class="text-blue-600">Core</span>
+            </span>
+          </div>
+          <p class="mb-8 text-gray-500 dark:text-gray-400">Access your municipal dashboard and manage city records.</p>
+
+          <!-- Social Buttons -->
+          <div class="flex flex-col gap-4 mb-8">
+            <button class="flex items-center justify-center w-full gap-3 py-3 font-medium transition-colors border border-gray-200 rounded-xl dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-white/5 dark:text-white">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.7511 10.1944C18.7511 9.47495 18.6915 8.94995 18.5626 8.40552H10.1797V11.6527H15.1003C15.0011 12.4597 14.4654 13.675 13.2749 14.4916L13.2582 14.6003L15.9087 16.6126L16.0924 16.6305C17.7788 15.1041 18.7511 12.8583 18.7511 10.1944Z" fill="#4285F4"/>
+                <path d="M10.1788 18.75C12.5895 18.75 14.6133 17.9722 16.0915 16.6305L13.274 14.4916C12.5201 15.0068 11.5081 15.3666 10.1788 15.3666C7.81773 15.3666 5.81379 13.8402 5.09944 11.7305L4.99473 11.7392L2.23868 13.8295L2.20264 13.9277C3.67087 16.786 6.68674 18.75 10.1788 18.75Z" fill="#34A853"/>
+                <path d="M5.10014 11.7305C4.91165 11.186 4.80257 10.6027 4.80257 9.99992C4.80257 9.3971 4.91165 8.81379 5.09022 8.26935L5.08523 8.1534L2.29464 6.02954L2.20333 6.0721C1.5982 7.25823 1.25098 8.5902 1.25098 9.99992C1.25098 11.4096 1.5982 12.7415 2.20333 13.9277L5.10014 11.7305Z" fill="#FBBC05"/>
+                <path d="M10.1789 4.63331C11.8554 4.63331 12.9864 5.34303 13.6312 5.93612L16.1511 3.525C14.6035 2.11528 12.5895 1.25 10.1789 1.25C6.68676 1.25 3.67088 3.21387 2.20264 6.07218L5.08953 8.26943C5.81381 6.15972 7.81776 4.63331 10.1789 4.63331Z" fill="#EB4335"/>
+              </svg>
+              Sign up with Google
+            </button>
+            <button class="flex items-center justify-center w-full gap-3 py-3 font-medium transition-colors border border-gray-200 rounded-xl dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-white/5 dark:text-white">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.3233 10.8417C16.31 8.89 17.925 7.94 18 7.89667C17.085 6.56167 15.6667 6.36833 15.1667 6.35333C13.9533 6.22833 12.77 7.07833 12.155 7.07833C11.5317 7.07833 10.56 6.37667 9.54 6.39833C8.21167 6.41833 6.96 7.18333 6.27833 8.38C4.89167 10.79 5.92333 14.3683 7.25833 16.315C7.915 17.2717 8.69 18.3417 9.72167 18.3017C10.7183 18.2617 11.0967 17.6533 12.3033 17.6533C13.5017 17.6533 13.8433 18.3017 14.8983 18.2817C15.9683 18.2617 16.635 17.3067 17.2883 16.3417C18.04 15.2417 18.3517 14.1817 18.3683 14.1267C18.3333 14.1133 16.34 13.3417 16.3233 10.8417ZM14.39 4.60667C14.9317 3.94167 15.3017 3.01833 15.2017 2.09167C14.4117 2.125 13.4317 2.62833 12.865 3.30333C12.355 3.90333 11.91 4.84667 12.03 5.75333C12.915 5.82333 13.8267 5.29333 14.39 4.60667Z" />
+              </svg>
+              Sign up with Apple
+            </button>
+          </div>
+
+          <!-- Separator -->
+          <div class="relative flex items-center mb-8">
+            <div class="flex-grow border-t border-gray-200 dark:border-gray-800"></div>
+            <span class="flex-shrink mx-4 text-sm font-medium text-gray-400 uppercase">OR</span>
+            <div class="flex-grow border-t border-gray-200 dark:border-gray-800"></div>
+          </div>
+
+          <!-- Form -->
+          <form class="space-y-6">
+            <div>
+              <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Your Name</label>
+              <input type="text" id="signup-name" placeholder="Your Name" class="w-full px-4 py-3 text-gray-900 bg-transparent border border-gray-300 rounded-xl dark:text-white dark:border-gray-700 focus:ring-2 focus:ring-brand-500 focus:outline-none placeholder-gray-400 dark:placeholder-gray-600" />
+            </div>
+            <div>
+              <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Your E-mail</label>
+              <input type="email" id="signup-email" placeholder="Your E-mail" class="w-full px-4 py-3 text-gray-900 bg-transparent border border-gray-300 rounded-xl dark:text-white dark:border-gray-700 focus:ring-2 focus:ring-brand-500 focus:outline-none placeholder-gray-400 dark:placeholder-gray-600" />
+            </div>
+            <div x-data="{ showPassword: false }">
+              <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+              <div class="relative">
+                <input :type="showPassword ? 'text' : 'password'" id="signup-password" placeholder="At least 8 characters" class="w-full px-4 py-3 pr-12 text-gray-900 bg-transparent border border-gray-300 rounded-xl dark:text-white dark:border-gray-700 focus:ring-2 focus:ring-brand-500 focus:outline-none placeholder-gray-400 dark:placeholder-gray-600" />
+                <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                  <svg x-show="!showPassword" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                  <svg x-show="showPassword" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88L3 3m11.12 11.12L21 21M12 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Terms Checkbox -->
+            <div class="flex items-center gap-3">
+              <input type="checkbox" id="terms" class="w-5 h-5 border-gray-300 rounded text-brand-500 focus:ring-brand-500 dark:bg-gray-800 dark:border-gray-700" />
+              <label for="terms" class="text-sm text-gray-500 dark:text-gray-400">
+                I agree to all the <span class="font-medium text-brand-600 dark:text-brand-400">Term, Privacy Policy</span> and <span class="font-medium text-brand-600 dark:text-brand-400">Fees.</span>
+              </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="button" onclick="handleSignup()" class="flex items-center justify-center w-full gap-2 py-4 font-semibold text-white transition-all bg-brand-500 rounded-2xl hover:bg-brand-600 shadow-lg shadow-brand-500/20">
+              Continue
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.16666 10H15.8333" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10 4.16666L15.8333 10L10 15.8333" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </form>
+
+          <!-- Login Link -->
+          <p class="mt-8 text-center text-gray-600 dark:text-gray-400">
+            Have an account? <a href="signin.html" class="font-semibold text-brand-600 dark:text-brand-400 hover:underline">Log in</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Section: Dashboard Mockup -->
+      <div class="fixed top-0 right-0 hidden w-1/2 h-screen items-center justify-center p-12 lg:flex overflow-hidden bg-gray-950">
+        <!-- Background Gradient/Blob -->
+        <div class="absolute inset-0 bg-gradient-to-br from-brand-600/10 via-transparent to-brand-500/5 dark:from-brand-900/20 dark:to-transparent"></div>
+        <div class="absolute top-1/4 -right-20 w-96 h-96 bg-brand-500/10 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-1/4 -left-20 w-96 h-96 bg-blue-500/5 rounded-full blur-[120px]"></div>
+
+        <!-- Mockup Image Container -->
+        <div class="relative z-10 w-full max-w-3xl transform perspective-1000 rotate-y-5 -translate-y-24 hover:rotate-y-0 transition-all duration-700">
+          <div class="p-2 bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-3xl shadow-2xl">
+            <img src="./images/dashboard_actual.png" alt="Actual Dashboard Mockup" class="w-full h-auto rounded-2xl shadow-inner" />
+          </div>
+          
+          <!-- Floating UI Element Placeholder -->
+          <div class="absolute bottom-2 -left-10 p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 transform translate-y-4 animate-bounce-slow">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-brand-100 dark:bg-brand-500/20 rounded-full flex items-center justify-center text-brand-600 dark:text-brand-400">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Monthly Revenue</p>
+                <p class="text-lg font-bold text-gray-900 dark:text-white">$45,231.89</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text below mockup -->
+        <div class="absolute bottom-32 left-0 right-0 text-center px-6">
+          <div class="max-w-lg mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">GovAdmin IMS: The Future of Local Governance.</h2>
+            <p class="text-gray-500 dark:text-gray-400 text-base leading-relaxed">
+              Streamline citizen records, automate revenue collection, and enhance municipal transparency with our comprehensive Information Management System.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark Mode Toggler (Floating) -->
+    <button
+      @click="darkMode = !darkMode"
+      class="fixed bottom-6 right-6 z-50 p-4 bg-white dark:bg-gray-800 rounded-full shadow-2xl border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white hover:scale-110 transition-transform"
+    >
+      <svg x-show="darkMode" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M16.242 16.242l.707.707M7.05 7.05l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+      <svg x-show="!darkMode" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+    </button>
+
+      <svg x-show="!darkMode" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+    </button>
+    <script src="./js/index.js"></script>
+  </body>
+</html>

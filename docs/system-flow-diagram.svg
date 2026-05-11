@@ -1,0 +1,348 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="2200" viewBox="0 0 1800 2200" role="img" aria-labelledby="title desc">
+  <title id="title">GovAdmin TailAdmin system flow diagram</title>
+  <desc id="desc">A monochrome architecture and process diagram showing how the static pages, build pipeline, runtime modules, Firebase data, dashboard widgets, civic workflows, reports, calendar, map, and image resize modules work together.</desc>
+  <defs>
+    <style>
+      .canvas { fill: #ffffff; }
+      .lane { stroke: #d0d0d0; stroke-width: 2; }
+      .title { font: 700 22px Arial, Helvetica, sans-serif; fill: #222222; letter-spacing: 1px; }
+      .section { font: 700 16px Arial, Helvetica, sans-serif; fill: #222222; letter-spacing: 1px; }
+      .box { fill: #ffffff; stroke: #222222; stroke-width: 2; rx: 0; ry: 0; }
+      .soft { fill: #fafafa; stroke: #222222; stroke-width: 2; rx: 0; ry: 0; }
+      .note { fill: #f7f7f7; stroke: #777777; stroke-width: 1.5; rx: 0; ry: 0; }
+      .text { font: 15px Arial, Helvetica, sans-serif; fill: #222222; }
+      .small { font: 13px Arial, Helvetica, sans-serif; fill: #222222; }
+      .tiny { font: 12px Arial, Helvetica, sans-serif; fill: #333333; }
+      .line { fill: none; stroke: #222222; stroke-width: 2; marker-end: url(#arrow); }
+      .line-soft { fill: none; stroke: #777777; stroke-width: 1.6; marker-end: url(#arrow-soft); }
+      .join { fill: none; stroke: #222222; stroke-width: 2; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#222222" />
+    </marker>
+    <marker id="arrow-soft" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#777777" />
+    </marker>
+  </defs>
+
+  <rect class="canvas" x="0" y="0" width="1800" height="2200" />
+  <text class="title" x="900" y="54" text-anchor="middle">GOVADMIN TAILADMIN CODEBASE - SYSTEM FLOW</text>
+  <text class="small" x="900" y="82" text-anchor="middle">Static Webpack dashboard template with Firebase Auth, Firestore data, client-side civic workflows, charts, reports, calendar, map, and resize widgets</text>
+
+  <line class="lane" x1="450" y1="130" x2="450" y2="2100" />
+  <line class="lane" x1="900" y1="130" x2="900" y2="2100" />
+  <line class="lane" x1="1350" y1="130" x2="1350" y2="2100" />
+
+  <text class="section" x="225" y="132" text-anchor="middle">DATA</text>
+  <text class="section" x="675" y="132" text-anchor="middle">BUILD</text>
+  <text class="section" x="1125" y="132" text-anchor="middle">RUNTIME</text>
+  <text class="section" x="1575" y="132" text-anchor="middle">FEATURE FLOWS</text>
+
+  <!-- DATA LANE -->
+  <rect class="box" x="95" y="175" width="260" height="74" />
+  <text class="text" x="225" y="207" text-anchor="middle">Firebase config</text>
+  <text class="tiny" x="225" y="229" text-anchor="middle">src/js/firebase.js</text>
+
+  <rect class="box" x="95" y="305" width="260" height="74" />
+  <text class="text" x="225" y="337" text-anchor="middle">Firebase app</text>
+  <text class="tiny" x="225" y="359" text-anchor="middle">initializeApp()</text>
+
+  <rect class="box" x="55" y="450" width="170" height="72" />
+  <text class="text" x="140" y="480" text-anchor="middle">Auth</text>
+  <text class="tiny" x="140" y="502" text-anchor="middle">getAuth(app)</text>
+
+  <rect class="box" x="255" y="450" width="170" height="72" />
+  <text class="text" x="340" y="480" text-anchor="middle">Firestore</text>
+  <text class="tiny" x="340" y="502" text-anchor="middle">getFirestore(app)</text>
+
+  <rect class="soft" x="42" y="600" width="366" height="78" />
+  <text class="text" x="225" y="630" text-anchor="middle">users/{uid}</text>
+  <text class="tiny" x="225" y="652" text-anchor="middle">profile name, email, createdAt</text>
+
+  <rect class="box" x="38" y="745" width="172" height="78" />
+  <text class="text" x="124" y="775" text-anchor="middle">New Citizen</text>
+  <text class="tiny" x="124" y="797" text-anchor="middle">records table</text>
+
+  <rect class="box" x="240" y="745" width="172" height="78" />
+  <text class="text" x="326" y="775" text-anchor="middle">Expenditure</text>
+  <text class="tiny" x="326" y="797" text-anchor="middle">spending logs</text>
+
+  <rect class="box" x="38" y="875" width="172" height="78" />
+  <text class="text" x="124" y="905" text-anchor="middle">Permits</text>
+  <text class="tiny" x="124" y="927" text-anchor="middle">issued licenses</text>
+
+  <rect class="box" x="240" y="875" width="172" height="78" />
+  <text class="text" x="326" y="905" text-anchor="middle">TaxRevenue</text>
+  <text class="tiny" x="326" y="927" text-anchor="middle">tax receipts</text>
+
+  <rect class="box" x="78" y="1005" width="294" height="78" />
+  <text class="text" x="225" y="1035" text-anchor="middle">permit &amp; License</text>
+  <text class="tiny" x="225" y="1057" text-anchor="middle">legacy document issuance path</text>
+
+  <rect class="note" x="62" y="1160" width="326" height="105" />
+  <text class="small" x="225" y="1192" text-anchor="middle">Local browser state</text>
+  <text class="tiny" x="225" y="1215" text-anchor="middle">Alpine persist, localStorage</text>
+  <text class="tiny" x="225" y="1236" text-anchor="middle">activeComplaintsCount, UI state</text>
+
+  <rect class="note" x="62" y="1350" width="326" height="116" />
+  <text class="small" x="225" y="1380" text-anchor="middle">Generated client files</text>
+  <text class="tiny" x="225" y="1403" text-anchor="middle">PDF reports via jsPDF</text>
+  <text class="tiny" x="225" y="1424" text-anchor="middle">CSV exports via Blob URL</text>
+  <text class="tiny" x="225" y="1445" text-anchor="middle">downloads stay in browser</text>
+
+  <line class="line" x1="225" y1="249" x2="225" y2="305" />
+  <line class="line" x1="225" y1="379" x2="140" y2="450" />
+  <line class="line" x1="225" y1="379" x2="340" y2="450" />
+  <line class="line" x1="340" y1="522" x2="225" y2="600" />
+  <line class="join" x1="225" y1="678" x2="225" y2="706" />
+  <line class="join" x1="124" y1="706" x2="326" y2="706" />
+  <line class="line" x1="124" y1="706" x2="124" y2="745" />
+  <line class="line" x1="326" y1="706" x2="326" y2="745" />
+  <line class="line" x1="124" y1="823" x2="124" y2="875" />
+  <line class="line" x1="326" y1="823" x2="326" y2="875" />
+  <line class="line" x1="225" y1="953" x2="225" y2="1005" />
+
+  <!-- BUILD LANE -->
+  <rect class="box" x="540" y="175" width="270" height="74" />
+  <text class="text" x="675" y="207" text-anchor="middle">Source pages</text>
+  <text class="tiny" x="675" y="229" text-anchor="middle">src/*.html dashboard screens</text>
+
+  <rect class="box" x="540" y="305" width="270" height="74" />
+  <text class="text" x="675" y="337" text-anchor="middle">Reusable partials</text>
+  <text class="tiny" x="675" y="359" text-anchor="middle">header, sidebar, tables, cards</text>
+
+  <rect class="box" x="500" y="450" width="170" height="72" />
+  <text class="text" x="585" y="480" text-anchor="middle">HTML loader</text>
+  <text class="tiny" x="585" y="502" text-anchor="middle">&lt;include src=&quot;...&quot;&gt;</text>
+
+  <rect class="box" x="700" y="450" width="170" height="72" />
+  <text class="text" x="785" y="480" text-anchor="middle">Page plugins</text>
+  <text class="tiny" x="785" y="502" text-anchor="middle">HtmlWebpackPlugin</text>
+
+  <rect class="box" x="540" y="600" width="270" height="74" />
+  <text class="text" x="675" y="632" text-anchor="middle">Entry bundle</text>
+  <text class="tiny" x="675" y="654" text-anchor="middle">src/js/index.js</text>
+
+  <rect class="box" x="490" y="745" width="150" height="78" />
+  <text class="text" x="565" y="775" text-anchor="middle">CSS</text>
+  <text class="tiny" x="565" y="797" text-anchor="middle">Tailwind + PostCSS</text>
+
+  <rect class="box" x="650" y="745" width="150" height="78" />
+  <text class="text" x="725" y="775" text-anchor="middle">JS</text>
+  <text class="tiny" x="725" y="797" text-anchor="middle">Babel transpile</text>
+
+  <rect class="box" x="810" y="745" width="70" height="78" />
+  <text class="small" x="845" y="775" text-anchor="middle">Assets</text>
+  <text class="tiny" x="845" y="797" text-anchor="middle">images</text>
+
+  <rect class="soft" x="540" y="900" width="270" height="82" />
+  <text class="text" x="675" y="932" text-anchor="middle">Webpack output</text>
+  <text class="tiny" x="675" y="954" text-anchor="middle">build/*.html, bundle.js, style.css</text>
+
+  <rect class="box" x="540" y="1055" width="270" height="82" />
+  <text class="text" x="675" y="1087" text-anchor="middle">Dev server</text>
+  <text class="tiny" x="675" y="1109" text-anchor="middle">webpack serve on port 3000</text>
+
+  <rect class="note" x="500" y="1210" width="350" height="116" />
+  <text class="small" x="675" y="1240" text-anchor="middle">Build behavior</text>
+  <text class="tiny" x="675" y="1263" text-anchor="middle">Generates one HTML file per src page</text>
+  <text class="tiny" x="675" y="1284" text-anchor="middle">Injects bundled JS at body end</text>
+  <text class="tiny" x="675" y="1305" text-anchor="middle">Copies image and font assets</text>
+
+  <line class="line" x1="675" y1="249" x2="675" y2="305" />
+  <line class="line" x1="675" y1="379" x2="585" y2="450" />
+  <line class="line" x1="675" y1="379" x2="785" y2="450" />
+  <line class="line" x1="675" y1="522" x2="675" y2="600" />
+  <line class="line" x1="675" y1="674" x2="565" y2="745" />
+  <line class="line" x1="675" y1="674" x2="725" y2="745" />
+  <line class="line" x1="675" y1="674" x2="845" y2="745" />
+  <line class="line" x1="675" y1="823" x2="675" y2="900" />
+  <line class="line" x1="675" y1="982" x2="675" y2="1055" />
+  <line class="line-soft" x1="675" y1="1137" x2="675" y2="1210" />
+
+  <!-- RUNTIME LANE -->
+  <rect class="box" x="990" y="175" width="270" height="74" />
+  <text class="text" x="1125" y="207" text-anchor="middle">Browser loads page</text>
+  <text class="tiny" x="1125" y="229" text-anchor="middle">compiled HTML + assets</text>
+
+  <rect class="box" x="990" y="305" width="270" height="74" />
+  <text class="text" x="1125" y="337" text-anchor="middle">bundle.js starts</text>
+  <text class="tiny" x="1125" y="359" text-anchor="middle">imports CSS and libraries</text>
+
+  <rect class="soft" x="990" y="450" width="270" height="82" />
+  <text class="text" x="1125" y="482" text-anchor="middle">Auth guard</text>
+  <text class="tiny" x="1125" y="504" text-anchor="middle">onAuthStateChanged()</text>
+
+  <rect class="box" x="940" y="610" width="170" height="76" />
+  <text class="text" x="1025" y="640" text-anchor="middle">No user</text>
+  <text class="tiny" x="1025" y="662" text-anchor="middle">redirect signup</text>
+
+  <rect class="box" x="1140" y="610" width="170" height="76" />
+  <text class="text" x="1225" y="640" text-anchor="middle">User exists</text>
+  <text class="tiny" x="1225" y="662" text-anchor="middle">load profile doc</text>
+
+  <rect class="box" x="990" y="755" width="270" height="74" />
+  <text class="text" x="1125" y="787" text-anchor="middle">Hydrate page chrome</text>
+  <text class="tiny" x="1125" y="809" text-anchor="middle">header name, email, initial</text>
+
+  <rect class="box" x="940" y="900" width="168" height="78" />
+  <text class="text" x="1024" y="930" text-anchor="middle">Alpine</text>
+  <text class="tiny" x="1024" y="952" text-anchor="middle">page state</text>
+
+  <rect class="box" x="1142" y="900" width="168" height="78" />
+  <text class="text" x="1226" y="930" text-anchor="middle">UI helpers</text>
+  <text class="tiny" x="1226" y="952" text-anchor="middle">search, copy, year</text>
+
+  <rect class="box" x="940" y="1045" width="168" height="78" />
+  <text class="text" x="1024" y="1075" text-anchor="middle">Flatpickr</text>
+  <text class="tiny" x="1024" y="1097" text-anchor="middle">date range inputs</text>
+
+  <rect class="box" x="1142" y="1045" width="168" height="78" />
+  <text class="text" x="1226" y="1075" text-anchor="middle">Dropzone</text>
+  <text class="tiny" x="1226" y="1097" text-anchor="middle">demo upload area</text>
+
+  <rect class="soft" x="990" y="1210" width="270" height="82" />
+  <text class="text" x="1125" y="1242" text-anchor="middle">DOMContentLoaded</text>
+  <text class="tiny" x="1125" y="1264" text-anchor="middle">initializes visual modules</text>
+
+  <rect class="box" x="935" y="1370" width="120" height="78" />
+  <text class="small" x="995" y="1400" text-anchor="middle">Charts</text>
+  <text class="tiny" x="995" y="1422" text-anchor="middle">ApexCharts</text>
+
+  <rect class="box" x="1070" y="1370" width="120" height="78" />
+  <text class="small" x="1130" y="1400" text-anchor="middle">Map</text>
+  <text class="tiny" x="1130" y="1422" text-anchor="middle">jsVectorMap</text>
+
+  <rect class="box" x="1205" y="1370" width="120" height="78" />
+  <text class="small" x="1265" y="1400" text-anchor="middle">Calendar</text>
+  <text class="tiny" x="1265" y="1422" text-anchor="middle">FullCalendar</text>
+
+  <rect class="box" x="1042" y="1530" width="166" height="78" />
+  <text class="small" x="1125" y="1560" text-anchor="middle">Resize pane</text>
+  <text class="tiny" x="1125" y="1582" text-anchor="middle">mouse/touch handlers</text>
+
+  <rect class="note" x="952" y="1695" width="346" height="116" />
+  <text class="small" x="1125" y="1725" text-anchor="middle">Important runtime note</text>
+  <text class="tiny" x="1125" y="1748" text-anchor="middle">handleIssueDocument is defined twice</text>
+  <text class="tiny" x="1125" y="1769" text-anchor="middle">later Permits implementation overrides</text>
+  <text class="tiny" x="1125" y="1790" text-anchor="middle">earlier permit &amp; License modal path</text>
+
+  <line class="line" x1="1125" y1="249" x2="1125" y2="305" />
+  <line class="line" x1="1125" y1="379" x2="1125" y2="450" />
+  <line class="line" x1="1125" y1="532" x2="1025" y2="610" />
+  <line class="line" x1="1125" y1="532" x2="1225" y2="610" />
+  <line class="line" x1="1225" y1="686" x2="1125" y2="755" />
+  <line class="line" x1="1125" y1="829" x2="1024" y2="900" />
+  <line class="line" x1="1125" y1="829" x2="1226" y2="900" />
+  <line class="line" x1="1024" y1="978" x2="1024" y2="1045" />
+  <line class="line" x1="1226" y1="978" x2="1226" y2="1045" />
+  <line class="line" x1="1125" y1="1123" x2="1125" y2="1210" />
+  <line class="join" x1="1125" y1="1292" x2="1125" y2="1330" />
+  <line class="join" x1="995" y1="1330" x2="1265" y2="1330" />
+  <line class="line" x1="995" y1="1330" x2="995" y2="1370" />
+  <line class="line" x1="1130" y1="1330" x2="1130" y2="1370" />
+  <line class="line" x1="1265" y1="1330" x2="1265" y2="1370" />
+  <line class="line" x1="1125" y1="1448" x2="1125" y2="1530" />
+  <line class="line-soft" x1="1125" y1="1608" x2="1125" y2="1695" />
+
+  <!-- FEATURE FLOWS LANE -->
+  <rect class="box" x="1440" y="175" width="270" height="74" />
+  <text class="text" x="1575" y="207" text-anchor="middle">Signup flow</text>
+  <text class="tiny" x="1575" y="229" text-anchor="middle">signup.html form</text>
+
+  <rect class="box" x="1440" y="305" width="270" height="74" />
+  <text class="text" x="1575" y="337" text-anchor="middle">Create auth user</text>
+  <text class="tiny" x="1575" y="359" text-anchor="middle">email and password</text>
+
+  <rect class="box" x="1440" y="435" width="270" height="74" />
+  <text class="text" x="1575" y="467" text-anchor="middle">Write profile doc</text>
+  <text class="tiny" x="1575" y="489" text-anchor="middle">users/{uid}</text>
+
+  <rect class="box" x="1440" y="580" width="270" height="74" />
+  <text class="text" x="1575" y="612" text-anchor="middle">Civic records</text>
+  <text class="tiny" x="1575" y="634" text-anchor="middle">citizens, permits, spend</text>
+
+  <rect class="box" x="1388" y="725" width="120" height="78" />
+  <text class="small" x="1448" y="755" text-anchor="middle">Citizen</text>
+  <text class="tiny" x="1448" y="777" text-anchor="middle">register/fetch</text>
+
+  <rect class="box" x="1515" y="725" width="120" height="78" />
+  <text class="small" x="1575" y="755" text-anchor="middle">Permit</text>
+  <text class="tiny" x="1575" y="777" text-anchor="middle">issue/fetch</text>
+
+  <rect class="box" x="1642" y="725" width="120" height="78" />
+  <text class="small" x="1702" y="755" text-anchor="middle">Spend</text>
+  <text class="tiny" x="1702" y="777" text-anchor="middle">record/fetch</text>
+
+  <rect class="box" x="1440" y="875" width="270" height="82" />
+  <text class="text" x="1575" y="907" text-anchor="middle">Reports page</text>
+  <text class="tiny" x="1575" y="929" text-anchor="middle">calls report generator functions</text>
+
+  <rect class="box" x="1388" y="1035" width="120" height="78" />
+  <text class="small" x="1448" y="1065" text-anchor="middle">Revenue</text>
+  <text class="tiny" x="1448" y="1087" text-anchor="middle">tax + permits</text>
+
+  <rect class="box" x="1515" y="1035" width="120" height="78" />
+  <text class="small" x="1575" y="1065" text-anchor="middle">Demo</text>
+  <text class="tiny" x="1575" y="1087" text-anchor="middle">citizens</text>
+
+  <rect class="box" x="1642" y="1035" width="120" height="78" />
+  <text class="small" x="1702" y="1065" text-anchor="middle">Complaints</text>
+  <text class="tiny" x="1702" y="1087" text-anchor="middle">missing fetch</text>
+
+  <rect class="soft" x="1440" y="1195" width="270" height="82" />
+  <text class="text" x="1575" y="1227" text-anchor="middle">Download artifact</text>
+  <text class="tiny" x="1575" y="1249" text-anchor="middle">PDF via jsPDF/autoTable or CSV</text>
+
+  <rect class="box" x="1440" y="1360" width="270" height="82" />
+  <text class="text" x="1575" y="1392" text-anchor="middle">Calendar workflow</text>
+  <text class="tiny" x="1575" y="1414" text-anchor="middle">select/click/add/update event</text>
+
+  <rect class="box" x="1440" y="1525" width="270" height="82" />
+  <text class="text" x="1575" y="1557" text-anchor="middle">Visual dashboard</text>
+  <text class="tiny" x="1575" y="1579" text-anchor="middle">charts, map, cards, tables</text>
+
+  <rect class="note" x="1412" y="1695" width="326" height="116" />
+  <text class="small" x="1575" y="1725" text-anchor="middle">Primary pages</text>
+  <text class="tiny" x="1575" y="1748" text-anchor="middle">index, citizens, add-citizen, permits</text>
+  <text class="tiny" x="1575" y="1769" text-anchor="middle">tax-collection, expenditures, reports</text>
+  <text class="tiny" x="1575" y="1790" text-anchor="middle">calendar, profile, component demos</text>
+
+  <line class="line" x1="1575" y1="249" x2="1575" y2="305" />
+  <line class="line" x1="1575" y1="379" x2="1575" y2="435" />
+  <line class="line" x1="1575" y1="509" x2="1575" y2="580" />
+  <line class="join" x1="1575" y1="654" x2="1575" y2="688" />
+  <line class="join" x1="1448" y1="688" x2="1702" y2="688" />
+  <line class="line" x1="1448" y1="688" x2="1448" y2="725" />
+  <line class="line" x1="1575" y1="688" x2="1575" y2="725" />
+  <line class="line" x1="1702" y1="688" x2="1702" y2="725" />
+  <line class="line" x1="1575" y1="803" x2="1575" y2="875" />
+  <line class="join" x1="1575" y1="957" x2="1575" y2="997" />
+  <line class="join" x1="1448" y1="997" x2="1702" y2="997" />
+  <line class="line" x1="1448" y1="997" x2="1448" y2="1035" />
+  <line class="line" x1="1575" y1="997" x2="1575" y2="1035" />
+  <line class="line" x1="1702" y1="997" x2="1702" y2="1035" />
+  <line class="line" x1="1575" y1="1113" x2="1575" y2="1195" />
+  <line class="line" x1="1575" y1="1277" x2="1575" y2="1360" />
+  <line class="line" x1="1575" y1="1442" x2="1575" y2="1525" />
+  <line class="line-soft" x1="1575" y1="1607" x2="1575" y2="1695" />
+
+  <!-- CROSS-LANE CONNECTIONS -->
+  <path class="line-soft" d="M810 941 C890 941 910 212 990 212" />
+  <path class="line-soft" d="M990 491 C835 491 495 342 355 342" />
+  <path class="line-soft" d="M1140 648 C820 648 720 640 408 640" />
+  <path class="line-soft" d="M1440 472 C960 472 650 640 408 640" />
+  <path class="line-soft" d="M1440 764 C1040 764 770 784 412 784" />
+  <path class="line-soft" d="M1515 764 C1120 764 780 914 412 914" />
+  <path class="line-soft" d="M1642 764 C1100 764 750 784 412 784" />
+  <path class="line-soft" d="M1448 1113 C1010 1113 770 914 412 914" />
+  <path class="line-soft" d="M1575 1113 C1080 1113 790 784 210 784" />
+  <path class="line-soft" d="M1575 1195 C1025 1195 770 1408 388 1408" />
+
+  <!-- FOOTER SUMMARY -->
+  <rect class="note" x="95" y="1910" width="1610" height="145" />
+  <text class="section" x="900" y="1944" text-anchor="middle">HOW THE SYSTEM WORKS IN ONE PASS</text>
+  <text class="small" x="900" y="1980" text-anchor="middle">Webpack expands static HTML pages and partials, injects one bundled JavaScript entry, extracts CSS, and serves or builds the dashboard assets.</text>
+  <text class="small" x="900" y="2010" text-anchor="middle">At runtime the browser starts Firebase, guards routes with Auth, hydrates user profile UI from Firestore, then initializes Alpine state and visual modules.</text>
+  <text class="small" x="900" y="2040" text-anchor="middle">User workflows write and read Firestore subcollections, while report and export workflows transform those records into downloadable PDF or CSV files.</text>
+</svg>

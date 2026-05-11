@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="760" viewBox="0 0 760 760" role="img" aria-labelledby="title desc">
+  <title id="title">Signup and authentication flow</title>
+  <desc id="desc">Signup and authentication redirect process.</desc>
+  <defs><style>.bg{fill:#fff}.title{font:700 18px Arial,Helvetica,sans-serif;fill:#222;letter-spacing:1px}.box{fill:#fff;stroke:#222;stroke-width:2}.text{font:14px Arial,Helvetica,sans-serif;fill:#222}.small{font:12px Arial,Helvetica,sans-serif;fill:#333}.line{fill:none;stroke:#222;stroke-width:2;marker-end:url(#a)}</style><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#222"/></marker></defs>
+  <rect class="bg" width="760" height="760"/><text class="title" x="380" y="48" text-anchor="middle">SIGNUP AND AUTH FLOW</text>
+  <rect class="box" x="260" y="90" width="240" height="64"/><text class="text" x="380" y="118" text-anchor="middle">User opens app</text><text class="small" x="380" y="139" text-anchor="middle">any HTML page</text>
+  <rect class="box" x="260" y="205" width="240" height="64"/><text class="text" x="380" y="233" text-anchor="middle">Auth state checked</text><text class="small" x="380" y="254" text-anchor="middle">onAuthStateChanged</text>
+  <rect class="box" x="80" y="340" width="210" height="64"/><text class="text" x="185" y="368" text-anchor="middle">Unauthenticated</text><text class="small" x="185" y="389" text-anchor="middle">redirect to signup.html</text>
+  <rect class="box" x="470" y="340" width="210" height="64"/><text class="text" x="575" y="368" text-anchor="middle">Authenticated</text><text class="small" x="575" y="389" text-anchor="middle">enter dashboard</text>
+  <rect class="box" x="80" y="475" width="210" height="64"/><text class="text" x="185" y="503" text-anchor="middle">Submit signup</text><text class="small" x="185" y="524" text-anchor="middle">name, email, password</text>
+  <rect class="box" x="80" y="610" width="210" height="64"/><text class="text" x="185" y="638" text-anchor="middle">Create Auth user</text><text class="small" x="185" y="659" text-anchor="middle">Firebase Auth</text>
+  <rect class="box" x="470" y="610" width="210" height="64"/><text class="text" x="575" y="638" text-anchor="middle">Create profile doc</text><text class="small" x="575" y="659" text-anchor="middle">users/{uid}</text>
+  <path class="line" d="M380 154 L380 205"/><path class="line" d="M380 269 L185 340"/><path class="line" d="M380 269 L575 340"/><path class="line" d="M185 404 L185 475"/><path class="line" d="M185 539 L185 610"/><path class="line" d="M290 642 L470 642"/><path class="line" d="M575 610 L575 404"/>
+</svg>

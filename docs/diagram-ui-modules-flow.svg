@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="780" viewBox="0 0 900 780" role="img" aria-labelledby="title desc">
+  <title id="title">UI modules flow</title>
+  <desc id="desc">Charts, map, calendar, and resize UI module flow.</desc>
+  <defs><style>.bg{fill:#fff}.title{font:700 18px Arial,Helvetica,sans-serif;fill:#222;letter-spacing:1px}.box{fill:#fff;stroke:#222;stroke-width:2}.text{font:14px Arial,Helvetica,sans-serif;fill:#222}.small{font:12px Arial,Helvetica,sans-serif;fill:#333}.line{fill:none;stroke:#222;stroke-width:2;marker-end:url(#a)}</style><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#222"/></marker></defs>
+  <rect class="bg" width="900" height="780"/><text class="title" x="450" y="48" text-anchor="middle">UI MODULES FLOW</text>
+  <rect class="box" x="330" y="90" width="240" height="64"/><text class="text" x="450" y="118" text-anchor="middle">DOMContentLoaded</text><text class="small" x="450" y="139" text-anchor="middle">runtime initialization point</text>
+  <rect class="box" x="60" y="245" width="160" height="64"/><text class="text" x="140" y="273" text-anchor="middle">chart01</text><text class="small" x="140" y="294" text-anchor="middle">bar revenue</text>
+  <rect class="box" x="260" y="245" width="160" height="64"/><text class="text" x="340" y="273" text-anchor="middle">chart02/03</text><text class="small" x="340" y="294" text-anchor="middle">dashboard charts</text>
+  <rect class="box" x="480" y="245" width="160" height="64"/><text class="text" x="560" y="273" text-anchor="middle">map01</text><text class="small" x="560" y="294" text-anchor="middle">world map markers</text>
+  <rect class="box" x="680" y="245" width="160" height="64"/><text class="text" x="760" y="273" text-anchor="middle">calendar-init</text><text class="small" x="760" y="294" text-anchor="middle">FullCalendar</text>
+  <rect class="box" x="100" y="430" width="200" height="64"/><text class="text" x="200" y="458" text-anchor="middle">ApexCharts render</text><text class="small" x="200" y="479" text-anchor="middle">if selector exists</text>
+  <rect class="box" x="350" y="430" width="200" height="64"/><text class="text" x="450" y="458" text-anchor="middle">jsVectorMap render</text><text class="small" x="450" y="479" text-anchor="middle">if #mapOne exists</text>
+  <rect class="box" x="600" y="430" width="200" height="64"/><text class="text" x="700" y="458" text-anchor="middle">Calendar render</text><text class="small" x="700" y="479" text-anchor="middle">add/update/select events</text>
+  <rect class="box" x="330" y="610" width="240" height="64"/><text class="text" x="450" y="638" text-anchor="middle">image-resize module</text><text class="small" x="450" y="659" text-anchor="middle">pane drag, resize, snap</text>
+  <path class="line" d="M450 154 L140 245"/><path class="line" d="M450 154 L340 245"/><path class="line" d="M450 154 L560 245"/><path class="line" d="M450 154 L760 245"/><path class="line" d="M140 309 L200 430"/><path class="line" d="M340 309 L200 430"/><path class="line" d="M560 309 L450 430"/><path class="line" d="M760 309 L700 430"/><path class="line" d="M450 494 L450 610"/>
+</svg>

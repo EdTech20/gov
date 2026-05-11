@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="760" viewBox="0 0 900 760" role="img" aria-labelledby="title desc">
+  <title id="title">Build flow diagram</title>
+  <desc id="desc">Webpack build process for the TailAdmin dashboard.</desc>
+  <defs>
+    <style>.bg{fill:#fff}.title{font:700 18px Arial,Helvetica,sans-serif;fill:#222;letter-spacing:1px}.box{fill:#fff;stroke:#222;stroke-width:2}.note{fill:#f8f8f8;stroke:#777;stroke-width:1.5}.text{font:14px Arial,Helvetica,sans-serif;fill:#222}.small{font:12px Arial,Helvetica,sans-serif;fill:#333}.line{fill:none;stroke:#222;stroke-width:2;marker-end:url(#a)}</style>
+    <marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#222"/></marker>
+  </defs>
+  <rect class="bg" width="900" height="760"/>
+  <text class="title" x="450" y="48" text-anchor="middle">BUILD FLOW</text>
+
+  <rect class="box" x="330" y="90" width="240" height="64"/><text class="text" x="450" y="118" text-anchor="middle">src/*.html pages</text><text class="small" x="450" y="139" text-anchor="middle">dashboard screens</text>
+  <rect class="box" x="330" y="205" width="240" height="64"/><text class="text" x="450" y="233" text-anchor="middle">HTML includes</text><text class="small" x="450" y="254" text-anchor="middle">partials/header/sidebar/cards</text>
+  <rect class="box" x="145" y="340" width="185" height="64"/><text class="text" x="237" y="368" text-anchor="middle">processNestedHtml</text><text class="small" x="237" y="389" text-anchor="middle">expands include tags</text>
+  <rect class="box" x="570" y="340" width="185" height="64"/><text class="text" x="662" y="368" text-anchor="middle">HtmlWebpackPlugin</text><text class="small" x="662" y="389" text-anchor="middle">one output per page</text>
+  <rect class="box" x="330" y="470" width="240" height="64"/><text class="text" x="450" y="498" text-anchor="middle">src/js/index.js</text><text class="small" x="450" y="519" text-anchor="middle">single app entry</text>
+  <rect class="box" x="120" y="605" width="160" height="64"/><text class="text" x="200" y="633" text-anchor="middle">CSS pipeline</text><text class="small" x="200" y="654" text-anchor="middle">Tailwind/PostCSS</text>
+  <rect class="box" x="370" y="605" width="160" height="64"/><text class="text" x="450" y="633" text-anchor="middle">JS pipeline</text><text class="small" x="450" y="654" text-anchor="middle">Babel/Webpack</text>
+  <rect class="box" x="620" y="605" width="160" height="64"/><text class="text" x="700" y="633" text-anchor="middle">Assets</text><text class="small" x="700" y="654" text-anchor="middle">images/fonts/icons</text>
+  <rect class="note" x="300" y="705" width="300" height="42"/><text class="text" x="450" y="731" text-anchor="middle">build/*.html + bundle.js + style.css</text>
+
+  <path class="line" d="M450 154 L450 205"/><path class="line" d="M450 269 L237 340"/><path class="line" d="M450 269 L662 340"/><path class="line" d="M450 404 L450 470"/><path class="line" d="M450 534 L200 605"/><path class="line" d="M450 534 L450 605"/><path class="line" d="M450 534 L700 605"/><path class="line" d="M450 669 L450 705"/>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="760" viewBox="0 0 860 760" role="img" aria-labelledby="title desc">
+  <title id="title">Report and export flow</title>
+  <desc id="desc">PDF and CSV report generation process.</desc>
+  <defs><style>.bg{fill:#fff}.title{font:700 18px Arial,Helvetica,sans-serif;fill:#222;letter-spacing:1px}.box{fill:#fff;stroke:#222;stroke-width:2}.note{fill:#f8f8f8;stroke:#777;stroke-width:1.5}.text{font:14px Arial,Helvetica,sans-serif;fill:#222}.small{font:12px Arial,Helvetica,sans-serif;fill:#333}.line{fill:none;stroke:#222;stroke-width:2;marker-end:url(#a)}</style><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#222"/></marker></defs>
+  <rect class="bg" width="860" height="760"/><text class="title" x="430" y="48" text-anchor="middle">REPORT AND EXPORT FLOW</text>
+  <rect class="box" x="310" y="90" width="240" height="64"/><text class="text" x="430" y="118" text-anchor="middle">reports.html</text><text class="small" x="430" y="139" text-anchor="middle">user clicks generate</text>
+  <rect class="box" x="70" y="235" width="190" height="64"/><text class="text" x="165" y="263" text-anchor="middle">Revenue report</text><text class="small" x="165" y="284" text-anchor="middle">tax + permits + spend</text>
+  <rect class="box" x="335" y="235" width="190" height="64"/><text class="text" x="430" y="263" text-anchor="middle">Demographics report</text><text class="small" x="430" y="284" text-anchor="middle">citizen records</text>
+  <rect class="box" x="600" y="235" width="190" height="64"/><text class="text" x="695" y="263" text-anchor="middle">Complaints report</text><text class="small" x="695" y="284" text-anchor="middle">calls fetchComplaints()</text>
+  <rect class="box" x="70" y="390" width="190" height="64"/><text class="text" x="165" y="418" text-anchor="middle">jsPDF + autoTable</text><text class="small" x="165" y="439" text-anchor="middle">PDF tables</text>
+  <rect class="box" x="335" y="390" width="190" height="64"/><text class="text" x="430" y="418" text-anchor="middle">CSV export</text><text class="small" x="430" y="439" text-anchor="middle">citizen records only</text>
+  <rect class="note" x="600" y="390" width="190" height="64"/><text class="text" x="695" y="418" text-anchor="middle">Missing function</text><text class="small" x="695" y="439" text-anchor="middle">fetchComplaints not found</text>
+  <rect class="box" x="310" y="575" width="240" height="64"/><text class="text" x="430" y="603" text-anchor="middle">Browser download</text><text class="small" x="430" y="624" text-anchor="middle">PDF save or Blob CSV link</text>
+  <path class="line" d="M430 154 L165 235"/><path class="line" d="M430 154 L430 235"/><path class="line" d="M430 154 L695 235"/><path class="line" d="M165 299 L165 390"/><path class="line" d="M430 299 L430 390"/><path class="line" d="M695 299 L695 390"/><path class="line" d="M165 454 L430 575"/><path class="line" d="M430 454 L430 575"/>
+</svg>

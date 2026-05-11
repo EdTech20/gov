@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="820" viewBox="0 0 900 820" role="img" aria-labelledby="title desc">
+  <title id="title">Data flow diagram</title>
+  <desc id="desc">Firebase and browser data flow for the GovAdmin dashboard.</desc>
+  <defs>
+    <style>
+      .bg{fill:#fff}.title{font:700 18px Arial,Helvetica,sans-serif;fill:#222;letter-spacing:1px}.box{fill:#fff;stroke:#222;stroke-width:2}.note{fill:#f8f8f8;stroke:#777;stroke-width:1.5}.text{font:14px Arial,Helvetica,sans-serif;fill:#222}.small{font:12px Arial,Helvetica,sans-serif;fill:#333}.line{fill:none;stroke:#222;stroke-width:2;marker-end:url(#a)}.soft{fill:none;stroke:#777;stroke-width:1.5;marker-end:url(#b)}
+    </style>
+    <marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#222"/></marker>
+    <marker id="b" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#777"/></marker>
+  </defs>
+  <rect class="bg" width="900" height="820"/>
+  <text class="title" x="450" y="48" text-anchor="middle">DATA FLOW</text>
+
+  <rect class="box" x="330" y="90" width="240" height="64"/>
+  <text class="text" x="450" y="118" text-anchor="middle">Firebase config</text>
+  <text class="small" x="450" y="139" text-anchor="middle">src/js/firebase.js</text>
+
+  <rect class="box" x="330" y="205" width="240" height="64"/>
+  <text class="text" x="450" y="233" text-anchor="middle">initializeApp()</text>
+  <text class="small" x="450" y="254" text-anchor="middle">creates Firebase app</text>
+
+  <rect class="box" x="185" y="340" width="180" height="68"/>
+  <text class="text" x="275" y="369" text-anchor="middle">Firebase Auth</text>
+  <text class="small" x="275" y="390" text-anchor="middle">current user + sessions</text>
+
+  <rect class="box" x="535" y="340" width="180" height="68"/>
+  <text class="text" x="625" y="369" text-anchor="middle">Firestore</text>
+  <text class="small" x="625" y="390" text-anchor="middle">user-owned records</text>
+
+  <rect class="box" x="330" y="485" width="240" height="68"/>
+  <text class="text" x="450" y="514" text-anchor="middle">users/{uid}</text>
+  <text class="small" x="450" y="535" text-anchor="middle">profile name, email, createdAt</text>
+
+  <rect class="box" x="70" y="645" width="150" height="64"/>
+  <text class="text" x="145" y="673" text-anchor="middle">New Citizen</text>
+  <text class="small" x="145" y="694" text-anchor="middle">citizen records</text>
+
+  <rect class="box" x="250" y="645" width="150" height="64"/>
+  <text class="text" x="325" y="673" text-anchor="middle">Expenditure</text>
+  <text class="small" x="325" y="694" text-anchor="middle">spending logs</text>
+
+  <rect class="box" x="430" y="645" width="150" height="64"/>
+  <text class="text" x="505" y="673" text-anchor="middle">Permits</text>
+  <text class="small" x="505" y="694" text-anchor="middle">issued licenses</text>
+
+  <rect class="box" x="610" y="645" width="150" height="64"/>
+  <text class="text" x="685" y="673" text-anchor="middle">TaxRevenue</text>
+  <text class="small" x="685" y="694" text-anchor="middle">tax receipts</text>
+
+  <rect class="note" x="300" y="745" width="300" height="50"/>
+  <text class="text" x="450" y="775" text-anchor="middle">PDF and CSV files are generated in browser</text>
+
+  <path class="line" d="M450 154 L450 205"/>
+  <path class="line" d="M450 269 L275 340"/>
+  <path class="line" d="M450 269 L625 340"/>
+  <path class="line" d="M625 408 L450 485"/>
+  <path class="line" d="M450 553 L145 645"/>
+  <path class="line" d="M450 553 L325 645"/>
+  <path class="line" d="M450 553 L505 645"/>
+  <path class="line" d="M450 553 L685 645"/>
+  <path class="soft" d="M450 709 L450 745"/>
+</svg>

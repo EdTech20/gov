@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+      Mapbox Demographics | GovAdmin IMS
+    </title>
+
+    <!-- Mapbox GL JS CSS -->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+    
+    <style>
+      #map { 
+        height: 650px; 
+        width: 100%; 
+        border-radius: 0.75rem; 
+      }
+      
+      /* HUD Styling */
+      .hud-panel {
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(0, 243, 255, 0.3);
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+      }
+      
+      .mapboxgl-popup-content {
+        background: rgba(0, 0, 0, 0.9) !important;
+        border: 1px solid #00f3ff;
+        color: #00f3ff;
+        font-family: monospace;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+        border-radius: 4px;
+      }
+      .mapboxgl-popup-tip {
+        border-top-color: #00f3ff !important;
+      }
+    </style>
+  </head>
+  <body
+    x-data="{ page: 'demographics', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark bg-gray-900': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div
+        class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto bg-[#0a0f18]"
+      >
+        <!-- Small Device Overlay Start -->
+        <include src="./partials/overlay.html" />
+        <!-- Small Device Overlay End -->
+
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+            <!-- Breadcrumb Start -->
+            <div x-data="{ pageName: `Interactive Mapbox Intel`}">
+              <include src="./partials/breadcrumb.html" />
+            </div>
+            <!-- Breadcrumb End -->
+
+            <div class="space-y-5 sm:space-y-6">
+              <div
+                class="rounded-2xl border border-gray-800 bg-gray-900 p-5 sm:p-6 relative overflow-hidden"
+              >
+                <div class="mb-5 flex items-end justify-between relative z-10">
+                  <div>
+                    <h3 class="text-xl font-bold text-white tracking-wider">
+                      Mapbox 3D Spatial Scan
+                    </h3>
+                    <p class="text-sm text-gray-400 mt-1">Click a state to fly in and render citizen nodes.</p>
+                  </div>
+                  <button id="resetMapBtn" class="hidden rounded border border-gray-700 bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 transition-all">
+                    Reset Camera
+                  </button>
+                </div>
+                
+                <!-- Map Container -->
+                <div class="relative overflow-hidden rounded-xl border border-gray-800">
+                  <div id="map"></div>
+                  
+                  <!-- Token Warning Overlay -->
+                  <div id="tokenWarning" class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-gray-900/90 backdrop-blur-md">
+                    <svg class="w-16 h-16 text-yellow-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    <h2 class="text-xl font-bold text-white mb-2">Mapbox Access Token Required</h2>
+                    <p class="text-gray-400 max-w-md text-center mb-6">To use Mapbox, you need to provide your personal Access Token in the code. I have set up everything else for you!</p>
+                  </div>
+
+                  <!-- Tactical HUD overlay (Hidden by default) -->
+                  <div id="hud" class="hud-panel absolute top-4 left-4 z-10 p-4 rounded-lg hidden w-64 pointer-events-none">
+                    <h4 class="text-[#00f3ff] text-xs font-bold tracking-widest uppercase mb-2 border-b border-[#00f3ff]/30 pb-2">Sector Analysis</h4>
+                    <div class="text-white font-mono text-sm">
+                      <span class="text-gray-400">STATE:</span> <span id="hud-state" class="font-bold">--</span><br>
+                      <span class="text-gray-400">NODES:</span> <span id="hud-count" class="text-green-400 font-bold">--</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
+      </div>
+      <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+
+  </body>
+</html>

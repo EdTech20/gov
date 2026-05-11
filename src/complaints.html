@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+      Complaints Management | GovAdmin IMS
+    </title>
+  </head>
+  <body
+    x-data="{ 
+      page: 'complaints', 
+      'loaded': true, 
+      'darkMode': false, 
+      'stickyMenu': false, 
+      'sidebarToggle': false, 
+      'scrollTop': false, 
+      'isComplaintModalOpen': false,
+      'complaints': [
+        { id: '#CMP-8921', citizen: 'John Doe', subject: 'Pothole on Allen Ave', category: 'Infrastructure', priority: 'High', status: 'Pending Review' },
+        { id: '#CMP-8922', citizen: 'Anonymous', subject: 'Uncollected bins in Ward 4', category: 'Waste Management', priority: 'Medium', status: 'Pending Review' },
+        { id: '#CMP-8923', citizen: 'Amina Yusuf', subject: 'Noise pollution from club', category: 'Public Nuisance', priority: 'Low', status: 'Pending Review' }
+      ],
+      updateActiveCount() {
+        const pendingCount = this.complaints.filter(c => c.status === 'Pending Review').length;
+        localStorage.setItem('activeComplaintsCount', pendingCount);
+      },
+      approve(id) {
+        const complaint = this.complaints.find(c => c.id === id);
+        if (complaint) {
+          complaint.status = 'Approved';
+          this.updateActiveCount();
+        }
+      },
+      reject(id) {
+        const complaint = this.complaints.find(c => c.id === id);
+        if (complaint) {
+          complaint.status = 'Rejected';
+          this.updateActiveCount();
+        }
+      },
+      deleteComplaint(id) {
+        this.complaints = this.complaints.filter(c => c.id !== id);
+        this.updateActiveCount();
+      }
+    }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)));
+         updateActiveCount();"
+    :class="{'dark bg-gray-900': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div
+        class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto"
+      >
+        <!-- Small Device Overlay Start -->
+        <include src="./partials/overlay.html" />
+        <!-- Small Device Overlay End -->
+
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+            <!-- Breadcrumb Start -->
+            <div x-data="{ pageName: `Complaints Management`}">
+              <include src="./partials/breadcrumb.html" />
+            </div>
+            <!-- Breadcrumb End -->
+
+            <div class="space-y-5 sm:space-y-6">
+              
+              <!-- Table Section -->
+              <div
+                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]"
+              >
+                <div class="px-5 py-4 sm:px-6 sm:py-5">
+                  <h3 class="text-lg font-bold text-gray-800 dark:text-white/90">
+                    Citizen Submitted Complaints
+                  </h3>
+                  <p class="text-sm text-gray-500 mt-1">Review, approve, reject, or delete complaints submitted by citizens.</p>
+                </div>
+                <div class="p-5 border-t border-gray-100 dark:border-gray-800 sm:p-6 overflow-x-auto">
+                  <table class="min-w-full">
+                    <thead>
+                      <tr class="border-y border-gray-100 dark:border-gray-800 text-left">
+                        <th class="py-3 pl-2"><p class="text-xs font-medium text-gray-500">Case ID & Citizen</p></th>
+                        <th class="py-3"><p class="text-xs font-medium text-gray-500">Category & Subject</p></th>
+                        <th class="py-3"><p class="text-xs font-medium text-gray-500">Priority</p></th>
+                        <th class="py-3"><p class="text-xs font-medium text-gray-500">Status</p></th>
+                        <th class="py-3 text-right pr-2"><p class="text-xs font-medium text-gray-500">Actions</p></th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                      <template x-for="complaint in complaints" :key="complaint.id">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition">
+                          <td class="py-4 pl-2">
+                            <p class="text-sm font-bold text-gray-800 dark:text-white" x-text="complaint.id"></p>
+                            <span class="text-xs text-gray-500" x-text="complaint.citizen"></span>
+                          </td>
+                          <td class="py-4">
+                            <p class="text-sm font-medium text-gray-800 dark:text-white" x-text="complaint.subject"></p>
+                            <span class="text-xs text-gray-500" x-text="complaint.category"></span>
+                          </td>
+                          <td class="py-4">
+                            <span 
+                              class="inline-flex rounded-full px-2 py-0.5 text-xs"
+                              :class="{
+                                'bg-error-50 text-error-600 dark:bg-error-500/15 dark:text-error-500': complaint.priority === 'High',
+                                'bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400': complaint.priority === 'Medium',
+                                'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400': complaint.priority === 'Low'
+                              }"
+                              x-text="complaint.priority"
+                            ></span>
+                          </td>
+                          <td class="py-4">
+                            <span 
+                              class="inline-flex rounded-full px-2 py-0.5 text-xs font-medium"
+                              :class="{
+                                'bg-warning-50 text-warning-600 dark:bg-warning-500/15 dark:text-orange-400': complaint.status === 'Pending Review',
+                                'bg-success-50 text-success-600 dark:bg-success-500/15 dark:text-success-500': complaint.status === 'Approved',
+                                'bg-error-50 text-error-600 dark:bg-error-500/15 dark:text-error-500': complaint.status === 'Rejected'
+                              }"
+                              x-text="complaint.status"
+                            ></span>
+                          </td>
+                          <td class="py-4 text-right pr-2">
+                            <div class="flex items-center justify-end gap-2">
+                              <button @click="isComplaintModalOpen = true" title="View Details" class="p-1.5 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 transition">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                              </button>
+                              <!-- Only show Approve/Reject if Pending -->
+                              <template x-if="complaint.status === 'Pending Review'">
+                                <div class="flex gap-2">
+                                  <button @click="approve(complaint.id)" title="Approve" class="p-1.5 rounded-md bg-success-50 text-success-600 hover:bg-success-100 dark:bg-success-500/10 dark:text-success-500 dark:hover:bg-success-500/20 transition">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                                  </button>
+                                  <button @click="reject(complaint.id)" title="Reject" class="p-1.5 rounded-md bg-warning-50 text-warning-600 hover:bg-warning-100 dark:bg-warning-500/10 dark:text-warning-500 dark:hover:bg-warning-500/20 transition">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                  </button>
+                                </div>
+                              </template>
+                              <button @click="deleteComplaint(complaint.id)" title="Delete" class="p-1.5 rounded-md bg-error-50 text-error-600 hover:bg-error-100 dark:bg-error-500/10 dark:text-error-500 dark:hover:bg-error-500/20 transition">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
+      </div>
+      <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+    <!-- Modal Backdrop -->
+    <div 
+      x-show="isComplaintModalOpen" 
+      class="fixed inset-0 z-99999 flex items-center justify-center bg-black/60 px-4 py-5 backdrop-blur-sm transition-opacity"
+      style="display: none;"
+    >
+      <!-- Modal Panel -->
+      <div 
+        @click.outside="isComplaintModalOpen = false"
+        class="w-full max-w-2xl transform rounded-2xl border border-gray-200 bg-white shadow-2xl transition-all dark:border-gray-800 dark:bg-gray-900"
+      >
+        <div class="flex items-center justify-between border-b border-gray-200 px-6 py-4 dark:border-gray-800">
+          <h3 class="text-lg font-bold text-gray-800 dark:text-white">Complaint Detailed View</h3>
+          <button @click="isComplaintModalOpen = false" class="text-gray-400 hover:text-gray-700 dark:hover:text-white transition">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="px-6 py-6">
+           <div class="grid grid-cols-2 gap-y-4 gap-x-6 mb-5">
+             <div>
+               <p class="text-xs font-medium uppercase tracking-wider text-gray-500">Case ID</p>
+               <p class="mt-1 font-semibold text-gray-800 dark:text-white">#CMP-8921</p>
+             </div>
+             <div>
+               <p class="text-xs font-medium uppercase tracking-wider text-gray-500">Citizen / Caller</p>
+               <p class="mt-1 font-semibold text-gray-800 dark:text-white">John Doe</p>
+             </div>
+             <div>
+               <p class="text-xs font-medium uppercase tracking-wider text-gray-500">Category</p>
+               <p class="mt-1 font-semibold text-gray-800 dark:text-white">Infrastructure</p>
+             </div>
+             <div>
+               <p class="text-xs font-medium uppercase tracking-wider text-gray-500">Date Submitted</p>
+               <p class="mt-1 font-semibold text-gray-800 dark:text-white">24 Oct 2025, 14:30</p>
+             </div>
+           </div>
+           
+           <div class="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-800/50">
+             <p class="text-xs font-medium uppercase tracking-wider text-gray-500 mb-1">Subject</p>
+             <p class="font-bold text-gray-800 dark:text-white mb-4">Pothole on Allen Ave</p>
+             
+             <p class="text-xs font-medium uppercase tracking-wider text-gray-500 mb-1">Full Description</p>
+             <p class="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+               There is a massive pothole forming right in the middle of the intersection at Allen Avenue. 
+               It has already caused two minor accidents this week because drivers swerve aggressively into the next lane to avoid it. 
+               Please send a road maintenance crew urgently before the incoming heavy rains make it completely impassable and dangerous.
+             </p>
+           </div>
+
+           <div class="mt-6 flex justify-end gap-3">
+             <button @click="isComplaintModalOpen = false" class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 transition">Close Window</button>
+             <button @click="isComplaintModalOpen = false" class="px-5 py-2.5 text-sm font-medium text-white bg-success-600 rounded-lg hover:bg-success-700 transition">Approve & Escalate</button>
+           </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+      Add Citizen Record | GovAdmin IMS
+    </title>
+  </head>
+  <body
+    x-data="{ page: 'add-citizen', 'loaded': true, 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)));"
+    :class="{'dark bg-gray-900': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div
+        class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto"
+      >
+        <!-- Small Device Overlay Start -->
+        <include src="./partials/overlay.html" />
+        <!-- Small Device Overlay End -->
+
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+            <!-- Breadcrumb Start -->
+            <div x-data="{ pageName: `Add Citizen Record`}">
+              <include src="./partials/breadcrumb.html" />
+            </div>
+            <!-- Breadcrumb End -->
+
+            <div class="space-y-5 sm:space-y-6">
+              <div
+                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-5 sm:p-6"
+              >
+                <div class="mb-6">
+                  <h3 class="text-lg font-medium text-gray-800 dark:text-white/90">
+                    Register New Citizen
+                  </h3>
+                  <p class="text-sm text-gray-500 mt-1">Fill in the required information to add a new citizen to the national directory.</p>
+                </div>
+                
+                <form 
+                  x-data="{
+                    name: '',
+                    nin: '',
+                    dob: '',
+                    gender: '',
+                    state: '',
+                    lga: '',
+                    loading: false,
+                    async submitRecord() {
+                      if (!this.name || !this.nin || !this.state || !this.lga || !this.gender || !this.dob) {
+                        alert('Please fill in all fields');
+                        return;
+                      }
+                      this.loading = true;
+                      try {
+                        await window.registerCitizen({
+                          name: this.name,
+                          nin: this.nin,
+                          dob: this.dob,
+                          gender: this.gender,
+                          state: this.state,
+                          lga: this.lga
+                        });
+                        
+                        // Clear form
+                        this.name = ''; this.nin = ''; this.dob = ''; this.gender = ''; this.state = ''; this.lga = '';
+                        
+                        // Keep loading for 10s as requested
+                        setTimeout(() => {
+                          this.loading = false;
+                          // Optional: redirect to citizens.html after success
+                          // window.location.href = 'citizens.html';
+                        }, 10000);
+                        
+                      } catch (err) {
+                        this.loading = false;
+                      }
+                    }
+                  }"
+                  @submit.prevent="submitRecord()"
+                >
+                  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div>
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Full Name</label>
+                      <input type="text" x-model="name" placeholder="e.g. Adebayo Ogunlesi" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800" />
+                    </div>
+
+                    <div>
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">National Identity Number (NIN)</label>
+                      <input type="text" x-model="nin" placeholder="11-digit NIN" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800" />
+                    </div>
+
+                    <div>
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Date of Birth</label>
+                      <input type="date" x-model="dob" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800" />
+                    </div>
+
+                    <div x-data="{ open: false, options: ['Male', 'Female'] }" class="relative">
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Gender</label>
+                      <button 
+                        type="button" 
+                        @click="open = !open" 
+                        @click.outside="open = false"
+                        class="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-left text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800"
+                      >
+                        <span x-text="gender ? gender : 'Select Gender'" :class="gender ? '' : 'text-gray-500'">Select Gender</span>
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                      </button>
+                      <div 
+                        x-show="open" 
+                        x-transition 
+                        class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-800 dark:bg-gray-900 custom-scrollbar"
+                        style="display: none;"
+                      >
+                        <template x-for="option in options" :key="option">
+                          <button 
+                            type="button" 
+                            @click="gender = option; open = false" 
+                            class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                            :class="gender === option ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400' : ''"
+                            x-text="option"
+                          ></button>
+                        </template>
+                      </div>
+                    </div>
+
+                    <div x-data="{ open: false, states: ['Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT - Abuja', 'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'] }" class="relative">
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">State of Origin</label>
+                      <button 
+                        type="button" 
+                        @click="open = !open" 
+                        @click.outside="open = false"
+                        class="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-left text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800"
+                      >
+                        <span x-text="state ? state : 'Select State'" :class="state ? '' : 'text-gray-500'">Select State</span>
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                      </button>
+                      <div 
+                        x-show="open" 
+                        x-transition 
+                        class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-800 dark:bg-gray-900 custom-scrollbar"
+                        style="display: none;"
+                      >
+                        <template x-for="s in states" :key="s">
+                          <button 
+                            type="button" 
+                            @click="state = s; open = false" 
+                            class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                            :class="state === s ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400' : ''"
+                            x-text="s"
+                          ></button>
+                        </template>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Local Government Area (LGA)</label>
+                      <input type="text" x-model="lga" placeholder="e.g. Ikeja" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800" />
+                    </div>
+                  </div>
+
+                  <div class="mt-8 flex justify-end gap-3">
+                    <button type="button" @click="window.history.back()" class="rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+                      Cancel
+                    </button>
+                    <button 
+                      type="submit" 
+                      :disabled="loading"
+                      class="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                      <template x-if="loading">
+                        <svg class="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+                      </template>
+                      <span x-text="loading ? 'Processing...' : 'Save Record'">Save Record</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
+      </div>
+      <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+    <script src="./js/index.js"></script>
+  </body>
+</html>

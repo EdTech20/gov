@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+      Expenditure Logs | GovAdmin IMS
+    </title>
+  </head>
+  <body
+    x-data="{ 
+      page: 'expenditures', 
+      'loaded': true, 
+      'darkMode': false, 
+      'stickyMenu': false, 
+      'sidebarToggle': false, 
+      'scrollTop': false,
+      expenditures: [],
+      async fetchLogs() {
+        this.expenditures = await window.fetchExpenditures();
+      }
+    }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)));
+         fetchLogs();"
+    :class="{'dark bg-gray-900': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div
+        class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto"
+      >
+        <!-- Small Device Overlay Start -->
+        <include src="./partials/overlay.html" />
+        <!-- Small Device Overlay End -->
+
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+            <!-- Breadcrumb Start -->
+            <div x-data="{ pageName: `Expenditure Tracking`}">
+              <include src="./partials/breadcrumb.html" />
+            </div>
+            <!-- Breadcrumb End -->
+
+            <div class="space-y-5 sm:space-y-6">
+              
+              <!-- Form Section -->
+              <div
+                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-5 sm:p-6"
+              >
+                <div class="mb-6">
+                  <h3 class="text-lg font-medium text-gray-800 dark:text-white/90">
+                    Log New Expenditure
+                  </h3>
+                  <p class="text-sm text-gray-500 mt-1">Record a new payment to a contractor, vendor, or internal project.</p>
+                </div>
+                
+                <form 
+                  x-data="{
+                    title: '',
+                    amount: '',
+                    category: '',
+                    vendor: '',
+                    loading: false,
+                    async submitTransaction() {
+                      if (!this.title || !this.amount || !this.category || !this.vendor) {
+                        alert('Please fill in all fields');
+                        return;
+                      }
+                      
+                      this.loading = true;
+                      try {
+                        await window.recordExpenditure({
+                          title: this.title,
+                          amount: this.amount,
+                          category: this.category,
+                          vendor: this.vendor
+                        });
+                        
+                        this.title = '';
+                        this.amount = '';
+                        this.category = '';
+                        this.vendor = '';
+                        
+                        // Wait for the 10s period as requested by the user
+                        setTimeout(async () => {
+                          this.loading = false;
+                          await fetchLogs();
+                        }, 10000);
+                        
+                      } catch (err) {
+                        this.loading = false;
+                        console.error(err);
+                      }
+                    }
+                  }"
+                  @submit.prevent="submitTransaction()"
+                >
+                  <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+                    <div class="sm:col-span-2">
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Project Title / Description</label>
+                      <input type="text" x-model="title" placeholder="e.g. Road Maintenance in Ikeja LGA" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800" />
+                    </div>
+
+                    <div>
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Amount (₦)</label>
+                      <input type="number" x-model="amount" placeholder="e.g. 500000" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800" />
+                    </div>
+
+                    <div x-data="{ open: false, options: ['Infrastructure', 'Healthcare', 'Education', 'Administrative', 'Security', 'Maintenance'] }" class="relative sm:col-span-1">
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Category</label>
+                      <button 
+                        type="button" 
+                        @click="open = !open" 
+                        @click.outside="open = false"
+                        class="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-left text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800"
+                      >
+                        <span x-text="category ? category : 'Select Category'" :class="category ? '' : 'text-gray-500'">Select Category</span>
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                      </button>
+                      <div 
+                        x-show="open" 
+                        x-transition 
+                        class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-800 dark:bg-gray-900 custom-scrollbar"
+                        style="display: none;"
+                      >
+                        <template x-for="option in options" :key="option">
+                          <button 
+                            type="button" 
+                            @click="category = option; open = false" 
+                            class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                            :class="category === option ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400' : ''"
+                            x-text="option"
+                          ></button>
+                        </template>
+                      </div>
+                    </div>
+
+                    <div class="sm:col-span-1">
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Beneficiary / Vendor</label>
+                      <input type="text" x-model="vendor" placeholder="Vendor Name" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800" />
+                    </div>
+
+                    <div class="sm:col-span-1 flex items-end">
+                      <button 
+                        type="submit" 
+                        :disabled="loading"
+                        class="w-full rounded-lg bg-blue-600 px-5 py-3 text-sm font-medium text-white hover:bg-blue-700 transition active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      >
+                        <template x-if="loading">
+                          <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </template>
+                        <span x-text="loading ? 'Processing...' : 'Record Transaction'">Record Transaction</span>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Table Section -->
+              <div
+                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]"
+              >
+                <div class="flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5">
+                  <h3 class="text-base font-medium text-gray-800 dark:text-white/90">
+                    Recent Expenditures
+                  </h3>
+                </div>
+                <div class="p-5 border-t border-gray-100 dark:border-gray-800 sm:p-6 overflow-x-auto">
+                  <table class="min-w-full">
+                    <thead>
+                      <tr class="border-y border-gray-100 dark:border-gray-800">
+                        <th class="py-3 pl-2 text-left"><p class="text-xs font-medium text-gray-500 dark:text-gray-400">Description</p></th>
+                        <th class="py-3 text-left"><p class="text-xs font-medium text-gray-500 dark:text-gray-400">Category</p></th>
+                        <th class="py-3 text-left"><p class="text-xs font-medium text-gray-500 dark:text-gray-400">Amount (₦)</p></th>
+                        <th class="py-3 text-left"><p class="text-xs font-medium text-gray-500 dark:text-gray-400">Date Logged</p></th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                      <template x-for="exp in expenditures" :key="exp.id">
+                        <tr>
+                          <td class="py-4 pl-2">
+                            <p class="text-sm font-medium text-gray-800 dark:text-white" x-text="exp.title"></p>
+                            <span class="text-xs text-gray-500" x-text="exp.vendor"></span>
+                          </td>
+                          <td class="py-4">
+                            <span 
+                              class="inline-flex rounded-full px-2 py-0.5 text-xs font-medium" 
+                              :class="{
+                                'bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-500': exp.category === 'Healthcare' || exp.category === 'Infrastructure',
+                                'bg-purple-50 text-purple-600 dark:bg-purple-500/15 dark:text-purple-400': exp.category === 'Education',
+                                'bg-orange-50 text-orange-600 dark:bg-orange-500/15 dark:text-orange-500': exp.category === 'Administrative',
+                                'bg-green-50 text-green-600 dark:bg-green-500/15 dark:text-green-500': exp.category === 'Maintenance',
+                                'bg-error-50 text-error-600 dark:bg-error-500/15 dark:text-error-500': exp.category === 'Security'
+                              }"
+                              x-text="exp.category"
+                            ></span>
+                          </td>
+                          <td class="py-4">
+                            <p class="text-sm font-bold text-gray-800 dark:text-white">₦<span x-text="Number(exp.amount).toLocaleString()"></span></p>
+                          </td>
+                          <td class="py-4">
+                            <p class="text-sm text-gray-500 dark:text-gray-400" x-text="exp.date"></p>
+                          </td>
+                        </tr>
+                      </template>
+                      <template x-if="expenditures.length === 0">
+                        <tr>
+                          <td colspan="4" class="py-8 text-center text-gray-500 dark:text-gray-400">
+                            No expenditures recorded yet.
+                          </td>
+                        </tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
+      </div>
+      <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+    <script src="./js/index.js"></script>
+  </body>
+</html>

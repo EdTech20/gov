@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="860" viewBox="0 0 900 860" role="img" aria-labelledby="title desc">
+  <title id="title">Runtime flow diagram</title>
+  <desc id="desc">Browser startup and runtime initialization flow.</desc>
+  <defs>
+    <style>.bg{fill:#fff}.title{font:700 18px Arial,Helvetica,sans-serif;fill:#222;letter-spacing:1px}.box{fill:#fff;stroke:#222;stroke-width:2}.note{fill:#f8f8f8;stroke:#777;stroke-width:1.5}.text{font:14px Arial,Helvetica,sans-serif;fill:#222}.small{font:12px Arial,Helvetica,sans-serif;fill:#333}.line{fill:none;stroke:#222;stroke-width:2;marker-end:url(#a)}</style>
+    <marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#222"/></marker>
+  </defs>
+  <rect class="bg" width="900" height="860"/>
+  <text class="title" x="450" y="48" text-anchor="middle">RUNTIME STARTUP FLOW</text>
+
+  <rect class="box" x="330" y="90" width="240" height="64"/><text class="text" x="450" y="118" text-anchor="middle">Browser loads page</text><text class="small" x="450" y="139" text-anchor="middle">compiled HTML/CSS/JS</text>
+  <rect class="box" x="330" y="205" width="240" height="64"/><text class="text" x="450" y="233" text-anchor="middle">bundle.js starts</text><text class="small" x="450" y="254" text-anchor="middle">imports libraries and modules</text>
+  <rect class="box" x="330" y="320" width="240" height="68"/><text class="text" x="450" y="349" text-anchor="middle">Auth guard</text><text class="small" x="450" y="370" text-anchor="middle">onAuthStateChanged()</text>
+  <rect class="box" x="165" y="465" width="170" height="64"/><text class="text" x="250" y="493" text-anchor="middle">No user</text><text class="small" x="250" y="514" text-anchor="middle">redirect signup.html</text>
+  <rect class="box" x="565" y="465" width="170" height="64"/><text class="text" x="650" y="493" text-anchor="middle">User exists</text><text class="small" x="650" y="514" text-anchor="middle">read profile doc</text>
+  <rect class="box" x="330" y="595" width="240" height="68"/><text class="text" x="450" y="624" text-anchor="middle">Hydrate visible UI</text><text class="small" x="450" y="645" text-anchor="middle">name, email, initials, metrics</text>
+  <rect class="box" x="95" y="735" width="145" height="64"/><text class="text" x="167" y="763" text-anchor="middle">Alpine</text><text class="small" x="167" y="784" text-anchor="middle">interactive state</text>
+  <rect class="box" x="275" y="735" width="145" height="64"/><text class="text" x="347" y="763" text-anchor="middle">Helpers</text><text class="small" x="347" y="784" text-anchor="middle">copy/search/year</text>
+  <rect class="box" x="455" y="735" width="145" height="64"/><text class="text" x="527" y="763" text-anchor="middle">Widgets</text><text class="small" x="527" y="784" text-anchor="middle">date/upload</text>
+  <rect class="box" x="635" y="735" width="145" height="64"/><text class="text" x="707" y="763" text-anchor="middle">Visual modules</text><text class="small" x="707" y="784" text-anchor="middle">charts/map/calendar</text>
+
+  <path class="line" d="M450 154 L450 205"/><path class="line" d="M450 269 L450 320"/><path class="line" d="M450 388 L250 465"/><path class="line" d="M450 388 L650 465"/><path class="line" d="M650 529 L450 595"/><path class="line" d="M450 663 L167 735"/><path class="line" d="M450 663 L347 735"/><path class="line" d="M450 663 L527 735"/><path class="line" d="M450 663 L707 735"/>
+</svg>

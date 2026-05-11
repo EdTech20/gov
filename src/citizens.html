@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+      Citizen Records | GovAdmin IMS
+    </title>
+  </head>
+  <body
+    x-data="{ 
+      page: 'citizens', 
+      'loaded': true, 
+      'darkMode': false, 
+      'stickyMenu': false, 
+      'sidebarToggle': false, 
+      'scrollTop': false,
+      citizens: [],
+      searchTerm: '',
+      async fetchCitizens() {
+        this.citizens = await window.fetchCitizens();
+      },
+      get filteredCitizens() {
+        if (!this.searchTerm) return this.citizens;
+        const term = this.searchTerm.toLowerCase();
+        return this.citizens.filter(c => 
+          c.name.toLowerCase().includes(term) || 
+          c.nin.toString().includes(term) ||
+          c.state.toLowerCase().includes(term) ||
+          c.lga.toLowerCase().includes(term)
+        );
+      }
+    }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)));
+         fetchCitizens();"
+    :class="{'dark bg-gray-900': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div
+        class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto"
+      >
+        <!-- Small Device Overlay Start -->
+        <include src="./partials/overlay.html" />
+        <!-- Small Device Overlay End -->
+
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+            <!-- Breadcrumb Start -->
+            <div x-data="{ pageName: `Citizen Records`}">
+              <include src="./partials/breadcrumb.html" />
+            </div>
+            <!-- Breadcrumb End -->
+
+            <div class="space-y-5 sm:space-y-6">
+              <div
+                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]"
+              >
+                <div class="flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5">
+                  <div>
+                    <h3 class="text-base font-medium text-gray-800 dark:text-white/90">
+                      Registered Citizens (Nigeria)
+                    </h3>
+                    <p class="text-theme-sm text-gray-500 mt-1">Directory of all citizens registered in the national database.</p>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <div class="relative">
+                      <input 
+                        type="text" 
+                        x-model="searchTerm"
+                        placeholder="Search by NIN, Name..." 
+                        class="h-10 w-64 rounded-lg border border-gray-300 bg-transparent px-4 py-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:text-white" 
+                      />
+                    </div>
+                    <button @click="window.exportCitizensCSV(filteredCitizens)" class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line>
+                      </svg>
+                      Export CSV
+                    </button>
+                  </div>
+                </div>
+                <div class="p-5 border-t border-gray-100 dark:border-gray-800 sm:p-6">
+                  <!-- ====== Table Citizens Start -->
+                  <include src="./partials/table/table-citizens.html" />
+                  <!-- ====== Table Citizens End -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
+      </div>
+      <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+    <script src="./js/index.js"></script>
+  </body>
+</html>

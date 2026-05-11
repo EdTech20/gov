@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+      Permits & Licenses | GovAdmin IMS
+    </title>
+  </head>
+  <body
+    x-data="{ page: 'permits', 'loaded': true, 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark bg-gray-900': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div
+        class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto"
+      >
+        <!-- Small Device Overlay Start -->
+        <include src="./partials/overlay.html" />
+        <!-- Small Device Overlay End -->
+
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+            <!-- Breadcrumb Start -->
+            <div x-data="{ pageName: `Issue Permit or License`}">
+              <include src="./partials/breadcrumb.html" />
+            </div>
+            <!-- Breadcrumb End -->
+
+            <div class="space-y-5 sm:space-y-6">
+              <div
+                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-5 sm:p-6"
+              >
+                <div class="mb-6">
+                  <h3 class="text-lg font-medium text-gray-800 dark:text-white/90">
+                    Permit Registration Form
+                  </h3>
+                  <p class="text-sm text-gray-500 mt-1">Process a new business permit, vehicle license, or construction approval.</p>
+                </div>
+                
+                <form 
+                  x-data="{
+                    applicantName: '',
+                    businessReg: '',
+                    permitType: '',
+                    status: '',
+                    amount: '',
+                    expiryDate: '',
+                    issueDocument() {
+                      window.handleIssueDocument({
+                        applicantName: this.applicantName,
+                        businessReg: this.businessReg,
+                        permitType: this.permitType,
+                        status: this.status,
+                        amount: this.amount,
+                        expiryDate: this.expiryDate
+                      });
+                    }
+                  }"
+                  @submit.prevent="issueDocument()"
+                >
+                  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div>
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Applicant Name / Business Name</label>
+                      <input type="text" x-model="applicantName" placeholder="e.g. John Doe Enterprises" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800" />
+                    </div>
+
+                    <div>
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">NIN / Business Reg Number (RC)</label>
+                      <input type="text" x-model="businessReg" placeholder="Enter ID" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800" />
+                    </div>
+
+                    <div x-data="{ open: false, options: ['Business Permit', 'Vehicle License', 'Construction Approval', 'Hawker Permit', 'Market Stall License'] }" class="relative">
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Permit Type</label>
+                      <button 
+                        type="button" 
+                        @click="open = !open" 
+                        @click.outside="open = false"
+                        class="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-left text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800"
+                      >
+                        <span x-text="permitType ? permitType : 'Select Permit Type'" :class="permitType ? '' : 'text-gray-500'">Select Permit Type</span>
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                      </button>
+                      <div 
+                        x-show="open" 
+                        x-transition 
+                        class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-800 dark:bg-gray-900 custom-scrollbar"
+                        style="display: none;"
+                      >
+                        <template x-for="option in options" :key="option">
+                          <button 
+                            type="button" 
+                            @click="permitType = option; open = false" 
+                            class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                            :class="permitType === option ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400' : ''"
+                            x-text="option"
+                          ></button>
+                        </template>
+                      </div>
+                    </div>
+
+                    <div x-data="{ open: false, options: ['Pending Review', 'Approved', 'Rejected'] }" class="relative">
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Processing Status</label>
+                      <button 
+                        type="button" 
+                        @click="open = !open" 
+                        @click.outside="open = false"
+                        class="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-left text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800"
+                      >
+                        <span x-text="status ? status : 'Select Status'" :class="status ? '' : 'text-gray-500'">Select Status</span>
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                      </button>
+                      <div 
+                        x-show="open" 
+                        x-transition 
+                        class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-800 dark:bg-gray-900 custom-scrollbar"
+                        style="display: none;"
+                      >
+                        <template x-for="option in options" :key="option">
+                          <button 
+                            type="button" 
+                            @click="status = option; open = false" 
+                            class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                            :class="status === option ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400' : ''"
+                            x-text="option"
+                          ></button>
+                        </template>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Amount Charged (₦)</label>
+                      <input type="number" x-model="amount" placeholder="e.g. 5000" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800" />
+                    </div>
+
+                    <div>
+                      <label class="mb-2 block text-sm font-medium text-gray-800 dark:text-white">Expiration Date</label>
+                      <input type="date" x-model="expiryDate" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-blue-500 dark:focus:bg-gray-800" />
+                    </div>
+                  </div>
+
+                  <div class="mt-8 flex justify-end gap-3">
+                    <button type="reset" class="rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+                      Cancel
+                    </button>
+                    <button type="submit" class="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700">
+                      Issue Document
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
+      </div>
+      <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+    <script src="./js/index.js"></script>
+  </body>
+</html>
