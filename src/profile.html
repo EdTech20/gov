@@ -13,7 +13,7 @@
     x-data="{ 
       page: 'profile', 
       'loaded': true, 
-      'darkMode': false, 
+      'darkMode': true, 
       'stickyMenu': false, 
       'sidebarToggle': false, 
       'scrollTop': false, 
@@ -53,7 +53,7 @@
       }
     }"
     x-init="
-         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         if (localStorage.getItem('darkMode') !== null) darkMode = JSON.parse(localStorage.getItem('darkMode'));
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)));
          fetchProfile();"
     :class="{'dark bg-gray-900': darkMode === true}"
