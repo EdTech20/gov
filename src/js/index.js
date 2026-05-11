@@ -518,36 +518,54 @@ window.fetchPermits = async () => {
   const user = auth.currentUser;
   if (!user) return [];
   try {
-    const q = query(collection(db, "users", user.uid, "Permits"), orderBy("createdAt", "desc"));
+    const q = query(collection(db, "users", user.uid, "permit & License"), orderBy("createdAt", "desc"));
     const querySnapshot = await getDocs(q);
     const list = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       list.push({
         id: doc.id,
-        applicant: data.applicantName || "N/A",
-        type: data.permitType || "N/A",
-        amount: data.amount || 0,
-        status: data.status || "Approved",
-        expiry: data.expiryDate || "N/A"
+        applicant: data["Applicant Name"] || "N/A",
+        type: data["Permit Type"] || "N/A",
+        amount: data["Amount Charged"] || 0,
+        status: data["Processing Status"] || "Approved",
+        expiry: data["Expiration Date"] || "N/A"
       });
     });
     return list;
   } catch (error) { return []; }
 };
 
-window.handleIssueDocument = async (permitData) => {
+window.fetchComplaints = async () => {
   const user = auth.currentUser;
-  if (!user) return;
+  if (!user) return [];
   try {
-    await addDoc(collection(db, "users", user.uid, "Permits"), {
-      ...permitData,
-      createdAt: serverTimestamp()
+    const q = query(collection(db, "users", user.uid, "Complaints"), orderBy("createdAt", "desc"));
+    const querySnapshot = await getDocs(q);
+    const list = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      list.push({
+        id: doc.id.slice(0, 8).toUpperCase(),
+        citizen: data.citizenName || "Anonymous",
+        subject: data.subject || "No Subject",
+        category: data.category || "General",
+        priority: data.priority || "Normal",
+        status: data.status || "Pending Review",
+        date: data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString() : "Recently"
+      });
     });
-    alert("Permit Issued Successfully");
-  } catch (err) {
-    console.error(err);
-    alert("Failed to issue permit");
+    // Fallback if empty
+    if (list.length === 0) {
+      return [
+        { id: 'C-7821', citizen: 'John Doe', subject: 'Water leakage in Sector 4', category: 'Infrastructure', priority: 'High', status: 'In Progress' },
+        { id: 'C-9012', citizen: 'Jane Smith', subject: 'Street light broken', category: 'Utilities', priority: 'Medium', status: 'Pending Review' }
+      ];
+    }
+    return list;
+  } catch (error) { 
+    console.error("Error fetching complaints:", error);
+    return []; 
   }
 };
 

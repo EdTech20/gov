@@ -43,7 +43,7 @@ module.exports = {
   entry: "./src/js/index.js",
   devServer: {
     static: {
-      directory: path.join(__dirname, "./build"),
+      directory: path.join(__dirname, "./public"),
     },
     compress: true,
     port: 3000,
@@ -99,7 +99,12 @@ module.exports = {
   },
   plugins: [
     ...generateHTMLPlugins(),
-    new Dotenv(),
+    new Dotenv({
+      path: "./.env",
+      safe: false,
+      systemvars: true,
+      silent: true,
+    }),
     new MiniCssExtractPlugin({
       filename: "style.css",
       chunkFilename: "style.css",
@@ -107,7 +112,7 @@ module.exports = {
   ],
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "build"),
+    path: path.resolve(__dirname, "public"),
     clean: true,
     assetModuleFilename: "[path][name][ext]",
   },

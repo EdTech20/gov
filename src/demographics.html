@@ -16,9 +16,15 @@
     
     <style>
       #map { 
-        height: 650px; 
+        height: 400px; 
         width: 100%; 
         border-radius: 0.75rem; 
+      }
+      @media (min-width: 640px) {
+        #map { height: 500px; }
+      }
+      @media (min-width: 768px) {
+        #map { height: 650px; }
       }
       
       /* HUD Styling */
